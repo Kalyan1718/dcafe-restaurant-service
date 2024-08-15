@@ -10,6 +10,7 @@ import java.util.List;
 
 @Service
 public interface RestaurantManager {
+
     Restaurant newRestaurant(NewRestaurantRequest request);
 
     List<Restaurant> all();
