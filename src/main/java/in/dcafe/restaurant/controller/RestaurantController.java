@@ -1,6 +1,7 @@
 package in.dcafe.restaurant.controller;
 
 
+import in.dcafe.restaurant.dto.NewItemInRestaurantRequest;
 import in.dcafe.restaurant.dto.NewRestaurantRequest;
 import in.dcafe.restaurant.entity.Restaurant;
 import in.dcafe.restaurant.service.RestaurantManager;
@@ -30,4 +31,11 @@ public class RestaurantController {
     public List<Restaurant> all() {
         return manager.all();
     }
+
+    @PostMapping(path = "/items/add", consumes = JSON, produces = JSON)
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public Restaurant addIteminRestaurant(@RequestBody NewItemInRestaurantRequest request) {
+        return manager.newItemInRestaurant(request);
+    }
+
 }
