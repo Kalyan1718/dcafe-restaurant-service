@@ -7,6 +7,7 @@ import in.dcafe.restaurant.entity.Restaurant;
 import in.dcafe.restaurant.repository.RestaurantRepository;
 import in.dcafe.restaurant.service.RestaurantManager;
 
+import jakarta.persistence.NoResultException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,13 +28,22 @@ public class RestaurantProcessor implements RestaurantManager {
 
     @Override
     public List<Restaurant> all() {
-        return repository.findAll();
+        return ensureRestaurants(repository.findAll());
+    }
+
+    private List<Restaurant> ensureRestaurants(List<Restaurant> restaurants) {
+        if(restaurants.isEmpty()) {
+            throw new NoResultException("No Restaurants found!");
+        }
+        return restaurants;
     }
 
     @Override
     public Restaurant newItemInRestaurant(NewItemInRestaurantRequest request) {
         Restaurant restaurant = repository.findById(request.restaurantId())
-                .orElseThrow(() -> new IllegalArgumentException("No Restaurant found with given id."));
+                .orElseThrow(() -> new IllegalArgumentException(
+                        String.format("No Restaurant found with given id: %s", request.restaurantId())
+                ));
         return repository.save(addNewItemInRestaurant(request, restaurant));
     }
 
