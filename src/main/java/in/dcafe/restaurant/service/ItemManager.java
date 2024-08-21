@@ -1,8 +1,9 @@
 package in.dcafe.restaurant.service;
 
 
+import in.dcafe.restaurant.dto.response.Items;
+import in.dcafe.restaurant.dto.response.ItemsByName;
 import in.dcafe.restaurant.entity.Item;
-import in.dcafe.restaurant.entity.Restaurant;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -10,5 +11,7 @@ import java.util.List;
 
 @Service
 public interface ItemManager {
-    List<Item> all();
+
+    List<ItemsByName> byName(String itemName);
+    List<Items> all();
 }
